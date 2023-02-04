@@ -121,7 +121,7 @@
 				rowIndex: randomRowIndex,
 				colIndex: randomColIndex,
 				val: startingBoard[randomRowIndex][randomColIndex],
-				isValid: false,
+				isValid: null,
 			});
 			startingBoard[randomRowIndex][randomColIndex] = 0;
 			const proposedBoard = startingBoard.map((row) => row.slice());
@@ -427,7 +427,9 @@
 								}}
 								class:text-slate-500={removedVals.find(
 									(v) => v.rowIndex == i && v.colIndex == j,
-								).isValid}
+								).isValid == true ||
+									removedVals.find((v) => v.rowIndex == i && v.colIndex == j)
+										.isValid == null}
 								class:text-rose-500={removedVals.find(
 									(v) => v.rowIndex == i && v.colIndex == j,
 								).isValid == false}
