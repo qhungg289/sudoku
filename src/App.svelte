@@ -271,7 +271,7 @@
 				on:click={() => {
 					isNewGameModalOpen = !isNewGameModalOpen;
 				}}
-				class="px-4 py-2 border-2 border-slate-200 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
+				class="px-4 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -293,11 +293,11 @@
 					<div
 						transition:fade
 						on:click={() => (isNewGameModalOpen = false)}
-						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50"
+						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/70"
 					>
 						<div
 							on:click|stopPropagation
-							class="bg-slate-100 rounded-lg overflow-hidden w-4/5 max-w-lg"
+							class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
 						>
 							<div class="p-8">
 								<h2 class="text-2xl font-bold text-center">
@@ -308,7 +308,7 @@
 							<div class="flex items-center">
 								<button
 									on:click={() => (isNewGameModalOpen = false)}
-									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 hover:bg-slate-300 active:bg-slate-200 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 active:bg-slate-200 dark:hover:bg-zinc-600 dark:active:bg-zinc-700 transition-colors"
 									>Cancel</button
 								>
 								<button
@@ -329,7 +329,7 @@
 				on:click={() => {
 					isResetModalOpen = !isResetModalOpen;
 				}}
-				class="px-4 py-2 border-2 border-slate-200 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
+				class="px-4 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -351,11 +351,11 @@
 					<div
 						transition:fade
 						on:click={() => (isResetModalOpen = false)}
-						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50"
+						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/70"
 					>
 						<div
 							on:click|stopPropagation
-							class="bg-slate-100 rounded-lg overflow-hidden w-4/5 max-w-lg"
+							class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
 						>
 							<div class="p-8">
 								<h2 class="text-2xl font-bold text-center">
@@ -366,7 +366,7 @@
 							<div class="flex items-center">
 								<button
 									on:click={() => (isResetModalOpen = false)}
-									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 hover:bg-slate-300 active:bg-slate-200 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 active:bg-slate-200 dark:hover:bg-zinc-600 dark:active:bg-zinc-700 transition-colors"
 									>Cancel</button
 								>
 								<button
@@ -386,7 +386,7 @@
 			<button
 				on:click={revertToLastHistory}
 				disabled={undoHistory.length == 0}
-				class="px-4 py-2 border-2 border-slate-200 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
+				class="px-4 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -415,17 +415,22 @@
 					{#each row as cell, j}
 						{#if !removedVals.some((v) => v.rowIndex == i && v.colIndex == j)}
 							<button
-								class="w-9 h-9 text-lg border-2 border-transparent font-bold bg-slate-200 rounded-md flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-lg border-2 border-transparent font-bold bg-slate-200 dark:bg-zinc-700 rounded-md flex items-center justify-center transition-colors"
 								disabled>{cell > 0 ? cell : ""}</button
 							>
 						{:else}
 							<button
-								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 rounded-md flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 dark:bg-zinc-700 rounded-md flex items-center justify-center transition-colors"
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
 									checkIsCellValid({ rowIndex: i, colIndex: j });
 								}}
 								class:text-slate-500={removedVals.find(
+									(v) => v.rowIndex == i && v.colIndex == j,
+								).isValid == true ||
+									removedVals.find((v) => v.rowIndex == i && v.colIndex == j)
+										.isValid == null}
+								class:dark:text-zinc-400={removedVals.find(
 									(v) => v.rowIndex == i && v.colIndex == j,
 								).isValid == true ||
 									removedVals.find((v) => v.rowIndex == i && v.colIndex == j)
@@ -442,16 +447,16 @@
 			{/each}
 
 			<div
-				class="h-full w-1 rounded-full bg-slate-300 absolute left-[7.25rem]"
+				class="h-full w-1 rounded-full bg-slate-300 dark:bg-zinc-500 absolute left-[7.25rem]"
 			/>
 			<div
-				class="h-full w-1 rounded-full bg-slate-300 absolute right-[7.25rem]"
+				class="h-full w-1 rounded-full bg-slate-300 dark:bg-zinc-500 absolute right-[7.25rem]"
 			/>
 			<div
-				class="h-1 w-full rounded-full bg-slate-300 absolute top-[7.25rem]"
+				class="h-1 w-full rounded-full bg-slate-300 dark:bg-zinc-500 absolute top-[7.25rem]"
 			/>
 			<div
-				class="h-1 w-full rounded-full bg-slate-300 absolute bottom-[7.25rem]"
+				class="h-1 w-full rounded-full bg-slate-300 dark:bg-zinc-500 absolute bottom-[7.25rem]"
 			/>
 		</div>
 
@@ -462,6 +467,7 @@
 					class:bg-blue-400={selectedNumber == i + 1}
 					class:border-blue-400={selectedNumber == i + 1}
 					class:border-slate-200={selectedNumber != i + 1}
+					class:dark:border-zinc-700={selectedNumber != i + 1}
 					class:text-slate-100={selectedNumber == i + 1}
 					on:click={() => setSelectedNumber(i + 1)}>{i + 1}</button
 				>
@@ -472,6 +478,7 @@
 				class:bg-blue-400={selectedNumber == 0}
 				class:border-blue-400={selectedNumber == 0}
 				class:border-slate-200={selectedNumber != 0}
+				class:dark:border-zinc-700={selectedNumber != 0}
 				class:text-slate-100={selectedNumber == 0}
 				on:click={() => setSelectedNumber(0)}>X</button
 			>
@@ -484,11 +491,11 @@
 			<div
 				transition:fade
 				on:click={() => (isWon = false)}
-				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50"
+				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/70"
 			>
 				<div
 					on:click|stopPropagation
-					class="bg-slate-100 rounded-lg overflow-hidden w-4/5 max-w-lg"
+					class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
 				>
 					<div class="p-8">
 						<h2 class="text-2xl font-bold text-center">Completed 🎉</h2>
