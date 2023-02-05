@@ -4,7 +4,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				nunito: ["Nunito", "sans-serif"],
+				"ibm-plex-mono": ["IBM Plex Mono", "monospace"],
 			},
 		},
 	},
