@@ -296,7 +296,17 @@
 	class="mx-auto max-w-2xl h-full flex flex-col items-center justify-around p-4"
 >
 	<div class="flex items-center justify-between gap-4 w-full">
-		<h1 class="text-3xl sm:text-4xl font-normal">SUDOKU</h1>
+		<div>
+			<h1 class="text-3xl md:text-4xl font-normal">Sudoku</h1>
+			<small
+				>By <a
+					href="https://github.com/qhungg289"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hover:underline focus:underline">@qhungg289</a
+				></small
+			>
+		</div>
 
 		<div class="flex items-center gap-2">
 			<button
@@ -332,7 +342,9 @@
 							class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
 						>
 							<div class="p-8">
-								<h2 class="text-xl text-center">Create a new game board?</h2>
+								<h2 class="text-base md:text-lg text-center">
+									Create a new game board?
+								</h2>
 							</div>
 
 							<div class="flex items-center">
@@ -388,7 +400,7 @@
 							class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
 						>
 							<div class="p-8">
-								<h2 class="text-xl text-center">
+								<h2 class="text-base md:text-lg text-center">
 									This will reset the board to it original state. Are you sure?
 								</h2>
 							</div>
@@ -545,7 +557,7 @@
 					class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
 				>
 					<div class="p-8">
-						<h2 class="text-xl text-center">Completed 🎉</h2>
+						<h2 class="text-base md:text-lg text-center">Completed 🎉</h2>
 					</div>
 
 					<div class="flex items-center">
