@@ -292,7 +292,9 @@
 	});
 </script>
 
-<main class="mx-auto h-full flex flex-col items-center justify-around p-4">
+<main
+	class="mx-auto max-w-2xl h-full flex flex-col items-center justify-around p-4"
+>
 	<div class="flex items-center justify-between gap-4 w-full">
 		<h1 class="text-3xl sm:text-4xl font-bold">SUDOKU</h1>
 
@@ -301,12 +303,12 @@
 				on:click={() => {
 					isNewGameModalOpen = !isNewGameModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-full font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-teal-400 focus-visible:border-teal-400 rounded-full font-bold text-sm sm:text-base transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
-					stroke-width="1.5"
+					stroke-width="2"
 					stroke="currentColor"
 					class="w-5 sm:w-6 h-5 sm:h-6"
 				>
@@ -346,7 +348,7 @@
 										newGame({ holes: 50 });
 										isNewGameModalOpen = false;
 									}}
-									class="w-full px-6 py-2 font-bold rounded-br-lg bg-blue-400 hover:bg-blue-300 active:bg-blue-500 text-slate-100 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-br-lg bg-teal-400 hover:bg-teal-300 active:bg-teal-500 text-slate-100 transition-colors"
 									>Confirm</button
 								>
 							</div>
@@ -359,12 +361,12 @@
 				on:click={() => {
 					isResetModalOpen = !isResetModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-full font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-teal-400 focus-visible:border-teal-400 rounded-full font-bold text-sm sm:text-base transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
-					stroke-width="1.5"
+					stroke-width="2"
 					stroke="currentColor"
 					class="w-5 sm:w-6 h-5 sm:h-6"
 				>
@@ -404,7 +406,7 @@
 										resetGame();
 										isResetModalOpen = false;
 									}}
-									class="w-full px-6 py-2 font-bold rounded-br-lg bg-blue-400 hover:bg-blue-300 active:bg-blue-500 text-slate-100 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-br-lg bg-teal-400 hover:bg-teal-300 active:bg-teal-500 text-slate-100 transition-colors"
 									>Confirm</button
 								>
 							</div>
@@ -416,13 +418,13 @@
 			<button
 				on:click={revertToLastHistory}
 				disabled={undoHistory.length == 0}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-blue-400 rounded-full font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-teal-400 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-teal-400 rounded-full font-bold text-sm sm:text-base transition-colors"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
-					stroke-width="1.5"
+					stroke-width="2"
 					stroke="currentColor"
 					class="w-5 sm:w-6 h-5 sm:h-6"
 				>
@@ -437,7 +439,7 @@
 	</div>
 
 	<div
-		class="flex flex-col md:flex-row items-center justify-evenly md:gap-16 w-full md:w-fit h-full"
+		class="flex flex-col md:flex-row items-center justify-evenly md:justify-between md:gap-16 w-full h-full"
 	>
 		<div class="flex flex-col items-center gap-1 relative">
 			{#each mainBoard as row, i}
@@ -445,12 +447,21 @@
 					{#each row as cell, j}
 						{#if !removedVals.some((v) => v.rowIndex == i && v.colIndex == j)}
 							<button
-								class="w-9 h-9 text-lg border-2 border-transparent font-bold bg-slate-200 dark:bg-zinc-700 rounded-md flex items-center justify-center transition-colors"
-								disabled>{cell > 0 ? cell : ""}</button
+								class="w-9 h-9 text-xl border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700  flex items-center justify-center transition-colors"
+								disabled
+								class:rounded-tl-xl={i == 0 && j == 0}
+								class:rounded-tr-xl={i == 0 && j == 8}
+								class:rounded-bl-xl={i == 8 && j == 0}
+								class:rounded-br-xl={i == 8 && j == 8}
+								>{cell > 0 ? cell : ""}</button
 							>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == true}
 							<button
-								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 dark:bg-zinc-700 text-slate-500 dark:text-zinc-400 rounded-md flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-xl border-2 border-dashed border-transparent hover:border-teal-400 bg-slate-200 dark:bg-zinc-700 text-slate-500 dark:text-zinc-300 flex items-center justify-center transition-colors"
+								class:rounded-tl-xl={i == 0 && j == 0}
+								class:rounded-tr-xl={i == 0 && j == 8}
+								class:rounded-bl-xl={i == 8 && j == 0}
+								class:rounded-br-xl={i == 8 && j == 8}
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
 									checkIsCellValid({ rowIndex: i, colIndex: j });
@@ -460,7 +471,11 @@
 							</button>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
 							<button
-								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 dark:bg-zinc-700 text-rose-500 rounded-md flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-xl border-2 border-dashed border-transparent hover:border-teal-400 bg-slate-200 dark:bg-zinc-700 text-rose-500 flex items-center justify-center transition-colors"
+								class:rounded-tl-xl={i == 0 && j == 0}
+								class:rounded-tr-xl={i == 0 && j == 8}
+								class:rounded-bl-xl={i == 8 && j == 0}
+								class:rounded-br-xl={i == 8 && j == 8}
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
 									checkIsCellValid({ rowIndex: i, colIndex: j });
@@ -474,25 +489,27 @@
 			{/each}
 
 			<div
-				class="h-full w-1 rounded-full bg-slate-300 dark:bg-zinc-500 absolute left-[7.25rem]"
+				class="h-full w-1 bg-slate-300 dark:bg-zinc-500 absolute left-[7.25rem]"
 			/>
 			<div
-				class="h-full w-1 rounded-full bg-slate-300 dark:bg-zinc-500 absolute right-[7.25rem]"
+				class="h-full w-1 bg-slate-300 dark:bg-zinc-500 absolute right-[7.25rem]"
 			/>
 			<div
-				class="h-1 w-full rounded-full bg-slate-300 dark:bg-zinc-500 absolute top-[7.25rem]"
+				class="h-1 w-full bg-slate-300 dark:bg-zinc-500 absolute top-[7.25rem]"
 			/>
 			<div
-				class="h-1 w-full rounded-full bg-slate-300 dark:bg-zinc-500 absolute bottom-[7.25rem]"
+				class="h-1 w-full bg-slate-300 dark:bg-zinc-500 absolute bottom-[7.25rem]"
 			/>
 		</div>
 
-		<div class="grid grid-cols-5 md:grid-cols-3 gap-2 w-fit mx-auto">
+		<div
+			class="grid grid-cols-5 md:grid-cols-3 gap-2 md:gap-4 w-fit mx-auto md:mx-0"
+		>
 			{#each { length: 9 } as _, i}
 				<button
-					class="w-14 h-14 rounded-full border-2 hover:border-blue-400 flex items-center justify-center text-xl font-bold transition-colors"
-					class:bg-blue-400={selectedNumber == i + 1}
-					class:border-blue-400={selectedNumber == i + 1}
+					class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 hover:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors"
+					class:bg-teal-400={selectedNumber == i + 1}
+					class:border-teal-400={selectedNumber == i + 1}
 					class:border-slate-200={selectedNumber != i + 1}
 					class:dark:border-zinc-700={selectedNumber != i + 1}
 					class:text-slate-100={selectedNumber == i + 1}
@@ -501,9 +518,9 @@
 			{/each}
 
 			<button
-				class="w-14 h-14 rounded-full border-2 hover:border-blue-400 flex items-center justify-center text-xl font-bold transition-colors md:col-start-2"
-				class:bg-blue-400={selectedNumber == 0}
-				class:border-blue-400={selectedNumber == 0}
+				class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 hover:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors md:col-start-2"
+				class:bg-teal-400={selectedNumber == 0}
+				class:border-teal-400={selectedNumber == 0}
 				class:border-slate-200={selectedNumber != 0}
 				class:dark:border-zinc-700={selectedNumber != 0}
 				class:text-slate-100={selectedNumber == 0}
@@ -533,7 +550,7 @@
 							on:click={() => {
 								isWon = false;
 							}}
-							class="w-full px-6 py-2 font-bold rounded-br-lg bg-blue-400 hover:bg-blue-300 active:bg-blue-500 text-slate-100 transition-colors"
+							class="w-full px-6 py-2 font-bold rounded-br-lg bg-teal-400 hover:bg-teal-300 active:bg-teal-500 text-slate-100 transition-colors"
 							>Confirm</button
 						>
 					</div>
