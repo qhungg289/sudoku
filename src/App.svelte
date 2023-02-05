@@ -121,7 +121,7 @@
 				rowIndex: randomRowIndex,
 				colIndex: randomColIndex,
 				val: startingBoard[randomRowIndex][randomColIndex],
-				isValid: null,
+				isValid: true,
 			});
 			startingBoard[randomRowIndex][randomColIndex] = 0;
 			const proposedBoard = startingBoard.map((row) => row.slice());
@@ -149,6 +149,22 @@
 		}
 	};
 
+	const saveGameState = () => {
+		localStorage.setItem("removedVals", JSON.stringify(removedVals));
+		localStorage.setItem("solvedBoard", JSON.stringify(solvedBoard));
+		localStorage.setItem("undoHistory", JSON.stringify(undoHistory));
+		localStorage.setItem("mainBoardCopy", JSON.stringify(mainBoardCopy));
+		localStorage.setItem("mainBoard", JSON.stringify(mainBoard));
+	};
+
+	const restoreGameState = () => {
+		removedVals = JSON.parse(localStorage.getItem("removedVals"));
+		solvedBoard = JSON.parse(localStorage.getItem("solvedBoard"));
+		undoHistory = JSON.parse(localStorage.getItem("undoHistory"));
+		mainBoardCopy = JSON.parse(localStorage.getItem("mainBoardCopy"));
+		mainBoard = JSON.parse(localStorage.getItem("mainBoard"));
+	};
+
 	const newGame = ({ holes }) => {
 		const [newRemovedVals, newMainBoard, newSolvedBoard] =
 			newStartingBoard(holes);
@@ -158,11 +174,15 @@
 
 		mainBoardCopy = mainBoard.map((row) => row.slice());
 		undoHistory = [];
+
+		saveGameState();
 	};
 
 	const resetGame = () => {
 		mainBoard = mainBoardCopy.map((row) => row.slice());
 		undoHistory = [];
+
+		saveGameState();
 	};
 
 	const addToHistory = () => {
@@ -172,6 +192,8 @@
 	const revertToLastHistory = () => {
 		mainBoard = undoHistory[undoHistory.length - 1].map((row) => row.slice());
 		undoHistory = [...undoHistory.slice(0, -1)];
+
+		saveGameState();
 	};
 
 	const setSelectedNumber = (newNumber) => {
@@ -228,6 +250,8 @@
 
 		mainBoard[rowIndex][colIndex] = selectedNumber;
 
+		saveGameState();
+
 		checkWinStatus();
 	};
 
@@ -255,10 +279,16 @@
 
 			return v;
 		});
+
+		saveGameState();
 	};
 
 	onMount(() => {
-		newGame({ holes: 50 });
+		if (localStorage.getItem("mainBoard")) {
+			restoreGameState();
+		} else {
+			newGame({ holes: 50 });
+		}
 	});
 </script>
 
@@ -271,7 +301,7 @@
 				on:click={() => {
 					isNewGameModalOpen = !isNewGameModalOpen;
 				}}
-				class="px-4 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-full font-bold text-sm sm:text-base transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -329,7 +359,7 @@
 				on:click={() => {
 					isResetModalOpen = !isResetModalOpen;
 				}}
-				class="px-4 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-full font-bold text-sm sm:text-base transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -386,7 +416,7 @@
 			<button
 				on:click={revertToLastHistory}
 				disabled={undoHistory.length == 0}
-				class="px-4 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 focus-visible:border-blue-400 rounded-md font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-blue-400 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-blue-400 rounded-full font-bold text-sm sm:text-base transition-colors"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -418,26 +448,23 @@
 								class="w-9 h-9 text-lg border-2 border-transparent font-bold bg-slate-200 dark:bg-zinc-700 rounded-md flex items-center justify-center transition-colors"
 								disabled>{cell > 0 ? cell : ""}</button
 							>
-						{:else}
+						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == true}
 							<button
-								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 dark:bg-zinc-700 rounded-md flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 dark:bg-zinc-700 text-slate-500 dark:text-zinc-400 rounded-md flex items-center justify-center transition-colors"
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
 									checkIsCellValid({ rowIndex: i, colIndex: j });
 								}}
-								class:text-slate-500={removedVals.find(
-									(v) => v.rowIndex == i && v.colIndex == j,
-								).isValid == true ||
-									removedVals.find((v) => v.rowIndex == i && v.colIndex == j)
-										.isValid == null}
-								class:dark:text-zinc-400={removedVals.find(
-									(v) => v.rowIndex == i && v.colIndex == j,
-								).isValid == true ||
-									removedVals.find((v) => v.rowIndex == i && v.colIndex == j)
-										.isValid == null}
-								class:text-rose-500={removedVals.find(
-									(v) => v.rowIndex == i && v.colIndex == j,
-								).isValid == false}
+							>
+								{cell > 0 ? cell : ""}
+							</button>
+						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
+							<button
+								class="w-9 h-9 text-lg border-2 border-dashed border-transparent hover:border-blue-400 bg-slate-200 dark:bg-zinc-700 text-rose-500 rounded-md flex items-center justify-center transition-colors"
+								on:click={() => {
+									writeNumberInCell({ rowIndex: i, colIndex: j });
+									checkIsCellValid({ rowIndex: i, colIndex: j });
+								}}
 							>
 								{cell > 0 ? cell : ""}
 							</button>
