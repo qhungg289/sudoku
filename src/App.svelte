@@ -335,7 +335,7 @@
 					<div
 						transition:fade
 						on:click={() => (isNewGameModalOpen = false)}
-						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50"
+						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 					>
 						<div
 							on:click|stopPropagation
@@ -393,7 +393,7 @@
 					<div
 						transition:fade
 						on:click={() => (isResetModalOpen = false)}
-						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50"
+						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 					>
 						<div
 							on:click|stopPropagation
@@ -457,23 +457,24 @@
 					{#each row as cell, j}
 						{#if !removedVals.some((v) => v.rowIndex == i && v.colIndex == j)}
 							<button
-								class="w-9 h-9 text-xl decoration-teal-400 decoration-2 underline-offset-4 border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700  flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-lg border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								disabled
 								class:rounded-tl-xl={i == 0 && j == 0}
 								class:rounded-tr-xl={i == 0 && j == 8}
 								class:rounded-bl-xl={i == 8 && j == 0}
 								class:rounded-br-xl={i == 8 && j == 8}
-								class:underline={selectedNumber == cell}
+								class:border-teal-400={selectedNumber == cell}
 								>{cell > 0 ? cell : ""}</button
 							>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == true}
 							<button
-								class="w-9 h-9 text-xl decoration-teal-400 decoration-2 underline-offset-4 border-2 border-dashed border-transparent hover:border-teal-400 bg-slate-200 dark:bg-zinc-700 text-slate-500 dark:text-zinc-300 flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-lg italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								class:rounded-tl-xl={i == 0 && j == 0}
 								class:rounded-tr-xl={i == 0 && j == 8}
 								class:rounded-bl-xl={i == 8 && j == 0}
 								class:rounded-br-xl={i == 8 && j == 8}
-								class:underline={selectedNumber == cell}
+								class:border-teal-400={selectedNumber == cell &&
+									selectedNumber != 0}
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
 									checkIsCellValid({ rowIndex: i, colIndex: j });
@@ -483,12 +484,13 @@
 							</button>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
 							<button
-								class="w-9 h-9 text-xl decoration-teal-400 decoration-2 underline-offset-4 border-2 border-dashed border-transparent hover:border-teal-400 bg-slate-200 dark:bg-zinc-700 text-rose-500 flex items-center justify-center transition-colors"
+								class="w-9 h-9 text-lg italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 text-rose-500 flex items-center justify-center transition-all"
 								class:rounded-tl-xl={i == 0 && j == 0}
 								class:rounded-tr-xl={i == 0 && j == 8}
 								class:rounded-bl-xl={i == 8 && j == 0}
 								class:rounded-br-xl={i == 8 && j == 8}
-								class:underline={selectedNumber == cell}
+								class:border-teal-400={selectedNumber == cell &&
+									selectedNumber != 0}
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
 									checkIsCellValid({ rowIndex: i, colIndex: j });
@@ -550,7 +552,7 @@
 			<div
 				transition:fade
 				on:click={() => (isWon = false)}
-				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50"
+				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 			>
 				<div
 					on:click|stopPropagation

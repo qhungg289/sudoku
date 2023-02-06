@@ -6,6 +6,9 @@ module.exports = {
 			fontFamily: {
 				"ibm-plex-mono": ["IBM Plex Mono", "monospace"],
 			},
+			screens: {
+				betterhover: { raw: "(hover: hover)" },
+			},
 		},
 	},
 	plugins: [],
