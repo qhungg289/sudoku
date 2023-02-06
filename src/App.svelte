@@ -482,11 +482,7 @@
 									checkIsCellValid({ rowIndex: i, colIndex: j });
 								}}
 							>
-								{#key cell}
-									<span class="absolute" transition:scale|local>
-										{cell > 0 ? cell : ""}
-									</span>
-								{/key}
+								{cell > 0 ? cell : ""}
 							</button>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
 							<button
@@ -502,11 +498,7 @@
 									checkIsCellValid({ rowIndex: i, colIndex: j });
 								}}
 							>
-								{#key cell}
-									<span class="absolute" transition:scale|local>
-										{cell > 0 ? cell : ""}
-									</span>
-								{/key}
+								{cell > 0 ? cell : ""}
 							</button>
 						{/if}
 					{/each}
