@@ -457,7 +457,7 @@
 					{#each row as cell, j}
 						{#if !removedVals.some((v) => v.rowIndex == i && v.colIndex == j)}
 							<button
-								class="w-9 h-9 text-lg border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class="w-9 h-9 text-lg focus:outline-none border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								disabled
 								class:rounded-tl-xl={i == 0 && j == 0}
 								class:rounded-tr-xl={i == 0 && j == 8}
@@ -468,7 +468,7 @@
 							>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == true}
 							<button
-								class="w-9 h-9 text-lg italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class="w-9 h-9 text-lg focus:outline-none italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								class:rounded-tl-xl={i == 0 && j == 0}
 								class:rounded-tr-xl={i == 0 && j == 8}
 								class:rounded-bl-xl={i == 8 && j == 0}
@@ -484,7 +484,7 @@
 							</button>
 						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
 							<button
-								class="w-9 h-9 text-lg italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 text-rose-500 flex items-center justify-center transition-all"
+								class="w-9 h-9 text-lg focus:outline-none italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 text-rose-500 flex items-center justify-center transition-all"
 								class:rounded-tl-xl={i == 0 && j == 0}
 								class:rounded-tr-xl={i == 0 && j == 8}
 								class:rounded-bl-xl={i == 8 && j == 0}
