@@ -303,7 +303,7 @@
 					href="https://github.com/qhungg289"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="hover:underline focus:underline">@qhungg289</a
+					class="betterhover:hover:underline focus:underline">@qhungg289</a
 				></small
 			>
 		</div>
@@ -313,7 +313,7 @@
 				on:click={() => {
 					isNewGameModalOpen = !isNewGameModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-teal-400 focus-visible:border-teal-400 rounded-full font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -371,7 +371,7 @@
 				on:click={() => {
 					isResetModalOpen = !isResetModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-teal-400 focus-visible:border-teal-400 rounded-full font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -428,7 +428,7 @@
 			<button
 				on:click={revertToLastHistory}
 				disabled={undoHistory.length == 0}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 hover:border-teal-400 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-teal-400 rounded-full font-bold text-sm sm:text-base transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-teal-400 rounded-full transition-colors"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -522,7 +522,7 @@
 		>
 			{#each { length: 9 } as _, i}
 				<button
-					class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 hover:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors"
+					class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors"
 					class:bg-teal-400={selectedNumber == i + 1}
 					class:border-teal-400={selectedNumber == i + 1}
 					class:border-slate-200={selectedNumber != i + 1}
@@ -534,15 +534,29 @@
 			{/each}
 
 			<button
-				class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 hover:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors md:col-start-2"
+				class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors md:col-start-2"
 				class:bg-teal-400={selectedNumber == 0}
 				class:border-teal-400={selectedNumber == 0}
 				class:border-slate-200={selectedNumber != 0}
 				class:dark:border-zinc-700={selectedNumber != 0}
 				class:text-slate-100={selectedNumber == 0}
 				class:dark:text-zinc-800={selectedNumber == 0}
-				on:click={() => setSelectedNumber(0)}>X</button
-			>
+				on:click={() => setSelectedNumber(0)}
+				><svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="2"
+					stroke="currentColor"
+					class="w-6 h-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M12 9.75L14.25 12m0 0l2.25 2.25M14.25 12l2.25-2.25M14.25 12L12 14.25m-2.58 4.92l-6.375-6.375a1.125 1.125 0 010-1.59L9.42 4.83c.211-.211.498-.33.796-.33H19.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-9.284c-.298 0-.585-.119-.796-.33z"
+					/>
+				</svg>
+			</button>
 		</div>
 	</div>
 
