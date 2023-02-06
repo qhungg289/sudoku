@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { fade } from "svelte/transition";
+	import { scale, blur } from "svelte/transition";
 	import Portal from "svelte-portal";
 
 	const BLANK_BOARD = [
@@ -313,7 +313,7 @@
 				on:click={() => {
 					isNewGameModalOpen = !isNewGameModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 focus:outline-none dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -333,7 +333,7 @@
 				{#if isNewGameModalOpen}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
-						transition:fade
+						transition:blur
 						on:click={() => (isNewGameModalOpen = false)}
 						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 					>
@@ -371,7 +371,7 @@
 				on:click={() => {
 					isResetModalOpen = !isResetModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 focus:outline-none dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -391,7 +391,7 @@
 				{#if isResetModalOpen}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
-						transition:fade
+						transition:blur
 						on:click={() => (isResetModalOpen = false)}
 						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 					>
@@ -428,7 +428,7 @@
 			<button
 				on:click={revertToLastHistory}
 				disabled={undoHistory.length == 0}
-				class="px-2 py-2 border-2 border-slate-200 dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-teal-400 rounded-full transition-colors"
+				class="px-2 py-2 border-2 border-slate-200 focus:outline-none dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-teal-400 rounded-full transition-colors"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -451,28 +451,33 @@
 	<div
 		class="flex flex-col md:flex-row items-center justify-evenly md:justify-between md:gap-16 w-full h-full"
 	>
-		<div class="flex flex-col items-center gap-1 relative">
+		<div
+			class="flex flex-col items-center gap-1 relative rounded-xl border-4 border-slate-300 dark:border-zinc-500"
+		>
 			{#each mainBoard as row, i}
 				<div class="flex items-center gap-1">
 					{#each row as cell, j}
 						{#if !removedVals.some((v) => v.rowIndex == i && v.colIndex == j)}
 							<button
-								class="w-9 h-9 text-lg focus:outline-none border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class="w-9 h-9 text-lg focus:outline-teal-400 border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								disabled
-								class:rounded-tl-xl={i == 0 && j == 0}
-								class:rounded-tr-xl={i == 0 && j == 8}
-								class:rounded-bl-xl={i == 8 && j == 0}
-								class:rounded-br-xl={i == 8 && j == 8}
+								class:rounded-tl-lg={i == 0 && j == 0}
+								class:rounded-tr-lg={i == 0 && j == 8}
+								class:rounded-bl-lg={i == 8 && j == 0}
+								class:rounded-br-lg={i == 8 && j == 8}
 								class:border-teal-400={selectedNumber == cell}
 								>{cell > 0 ? cell : ""}</button
 							>
-						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == true}
+						{:else}
 							<button
-								class="w-9 h-9 text-lg focus:outline-none italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
-								class:rounded-tl-xl={i == 0 && j == 0}
-								class:rounded-tr-xl={i == 0 && j == 8}
-								class:rounded-bl-xl={i == 8 && j == 0}
-								class:rounded-br-xl={i == 8 && j == 8}
+								class="w-9 h-9 text-lg focus:outline-teal-400 italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class:text-rose-500={removedVals.find(
+									(v) => v.rowIndex == i && v.colIndex == j,
+								).isValid == false}
+								class:rounded-tl-lg={i == 0 && j == 0}
+								class:rounded-tr-lg={i == 0 && j == 8}
+								class:rounded-bl-lg={i == 8 && j == 0}
+								class:rounded-br-lg={i == 8 && j == 8}
 								class:border-teal-400={selectedNumber == cell &&
 									selectedNumber != 0}
 								on:click={() => {
@@ -480,23 +485,11 @@
 									checkIsCellValid({ rowIndex: i, colIndex: j });
 								}}
 							>
-								{cell > 0 ? cell : ""}
-							</button>
-						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
-							<button
-								class="w-9 h-9 text-lg focus:outline-none italic border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 text-rose-500 flex items-center justify-center transition-all"
-								class:rounded-tl-xl={i == 0 && j == 0}
-								class:rounded-tr-xl={i == 0 && j == 8}
-								class:rounded-bl-xl={i == 8 && j == 0}
-								class:rounded-br-xl={i == 8 && j == 8}
-								class:border-teal-400={selectedNumber == cell &&
-									selectedNumber != 0}
-								on:click={() => {
-									writeNumberInCell({ rowIndex: i, colIndex: j });
-									checkIsCellValid({ rowIndex: i, colIndex: j });
-								}}
-							>
-								{cell > 0 ? cell : ""}
+								{#key cell}
+									<span class="absolute" transition:scale|local>
+										{cell > 0 ? cell : ""}
+									</span>
+								{/key}
 							</button>
 						{/if}
 					{/each}
@@ -522,7 +515,7 @@
 		>
 			{#each { length: 9 } as _, i}
 				<button
-					class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors"
+					class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 focus:outline-none focus-visible:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors"
 					class:bg-teal-400={selectedNumber == i + 1}
 					class:border-teal-400={selectedNumber == i + 1}
 					class:border-slate-200={selectedNumber != i + 1}
@@ -534,7 +527,7 @@
 			{/each}
 
 			<button
-				class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors md:col-start-2"
+				class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 focus:outline-none focus-visible:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors md:col-start-2"
 				class:bg-teal-400={selectedNumber == 0}
 				class:border-teal-400={selectedNumber == 0}
 				class:border-slate-200={selectedNumber != 0}
@@ -564,7 +557,7 @@
 		{#if isWon}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
-				transition:fade
+				transition:blur
 				on:click={() => (isWon = false)}
 				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 			>
