@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { scale, blur } from "svelte/transition";
+	import { scale, fade } from "svelte/transition";
 	import Portal from "svelte-portal";
 
 	const BLANK_BOARD = [
@@ -333,7 +333,7 @@
 				{#if isNewGameModalOpen}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
-						transition:blur
+						transition:fade
 						on:click={() => (isNewGameModalOpen = false)}
 						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 					>
@@ -391,7 +391,7 @@
 				{#if isResetModalOpen}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
-						transition:blur
+						transition:fade
 						on:click={() => (isResetModalOpen = false)}
 						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 					>
@@ -557,7 +557,7 @@
 		{#if isWon}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
-				transition:blur
+				transition:fade
 				on:click={() => (isWon = false)}
 				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
 			>
