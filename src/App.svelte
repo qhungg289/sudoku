@@ -290,6 +290,14 @@
 			newGame({ holes: 50 });
 		}
 	});
+
+	const checkValidOnBoardChange = (node, { cell, rowIndex, colIndex }) => {
+		return {
+			update({ cell, rowIndex, colIndex }) {
+				checkIsCellValid({ rowIndex, colIndex });
+			},
+		};
+	};
 </script>
 
 <main
@@ -468,9 +476,12 @@
 								class:border-teal-400={selectedNumber == cell}
 								>{cell > 0 ? cell : ""}</button
 							>
-						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == true}
+						{:else}
 							<button
 								class="w-9 h-9 text-lg focus:outline-teal-400 border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class:text-rose-500={removedVals.find(
+									(v) => v.rowIndex == i && v.colIndex == j,
+								).isValid == false}
 								class:rounded-tl-lg={i == 0 && j == 0}
 								class:rounded-tr-lg={i == 0 && j == 8}
 								class:rounded-bl-lg={i == 8 && j == 0}
@@ -479,24 +490,8 @@
 									selectedNumber != 0}
 								on:click={() => {
 									writeNumberInCell({ rowIndex: i, colIndex: j });
-									checkIsCellValid({ rowIndex: i, colIndex: j });
 								}}
-							>
-								{cell > 0 ? cell : ""}
-							</button>
-						{:else if removedVals.find((v) => v.rowIndex == i && v.colIndex == j).isValid == false}
-							<button
-								class="w-9 h-9 text-lg text-rose-500 focus:outline-teal-400 border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
-								class:rounded-tl-lg={i == 0 && j == 0}
-								class:rounded-tr-lg={i == 0 && j == 8}
-								class:rounded-bl-lg={i == 8 && j == 0}
-								class:rounded-br-lg={i == 8 && j == 8}
-								class:border-teal-400={selectedNumber == cell &&
-									selectedNumber != 0}
-								on:click={() => {
-									writeNumberInCell({ rowIndex: i, colIndex: j });
-									checkIsCellValid({ rowIndex: i, colIndex: j });
-								}}
+								use:checkValidOnBoardChange={{ cell, rowIndex: i, colIndex: j }}
 							>
 								{cell > 0 ? cell : ""}
 							</button>
