@@ -337,7 +337,7 @@
 					/>
 				</svg>
 			</button>
-			<Portal>
+			<Portal target="#app">
 				{#if isNewGameModalOpen}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
@@ -395,7 +395,7 @@
 					/>
 				</svg>
 			</button>
-			<Portal>
+			<Portal target="#app">
 				{#if isResetModalOpen}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
@@ -493,7 +493,11 @@
 								}}
 								use:checkValidOnBoardChange={{ cell, rowIndex: i, colIndex: j }}
 							>
-								{cell > 0 ? cell : ""}
+								{#key cell}
+									<span class="absolute" transition:scale|local>
+										{cell > 0 ? cell : ""}
+									</span>
+								{/key}
 							</button>
 						{/if}
 					{/each}
@@ -557,7 +561,7 @@
 		</div>
 	</div>
 
-	<Portal>
+	<Portal target="#app">
 		{#if isWon}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
