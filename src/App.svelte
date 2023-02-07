@@ -358,7 +358,7 @@
 							<div class="flex items-center">
 								<button
 									on:click={() => (isNewGameModalOpen = false)}
-									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 active:bg-slate-200 dark:hover:bg-zinc-600 dark:active:bg-zinc-700 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:opacity-80 active:opacity-100 transition-all"
 									>Cancel</button
 								>
 								<button
@@ -366,7 +366,7 @@
 										newGame({ holes: 50 });
 										isNewGameModalOpen = false;
 									}}
-									class="w-full px-6 py-2 font-bold rounded-br-lg bg-teal-400 hover:bg-teal-300 active:bg-teal-500 text-slate-100 dark:text-zinc-800 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-br-lg bg-gradient-to-r from-teal-400 to-sky-400 hover:opacity-80 active:opacity-100 text-slate-100 dark:text-zinc-800 transition-all"
 									>Confirm</button
 								>
 							</div>
@@ -416,7 +416,7 @@
 							<div class="flex items-center">
 								<button
 									on:click={() => (isResetModalOpen = false)}
-									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 active:bg-slate-200 dark:hover:bg-zinc-600 dark:active:bg-zinc-700 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:opacity-80 active:opacity-100 transition-all"
 									>Cancel</button
 								>
 								<button
@@ -424,7 +424,7 @@
 										resetGame();
 										isResetModalOpen = false;
 									}}
-									class="w-full px-6 py-2 font-bold rounded-br-lg bg-teal-400 hover:bg-teal-300 active:bg-teal-500 text-slate-100 dark:text-zinc-800 transition-colors"
+									class="w-full px-6 py-2 font-bold rounded-br-lg bg-gradient-to-r from-teal-400 to-sky-400 hover:opacity-80 active:opacity-100 text-slate-100 dark:text-zinc-800 transition-all"
 									>Confirm</button
 								>
 							</div>
@@ -582,7 +582,7 @@
 							on:click={() => {
 								isWon = false;
 							}}
-							class="w-full px-6 py-2 font-bold rounded-br-lg bg-teal-400 hover:bg-teal-300 active:bg-teal-500 text-slate-100 dark:text-zinc-800 transition-colors"
+							class="w-full px-6 py-2 font-bold rounded-br-lg bg-gradient-to-r from-teal-400 to-sky-400 hover:opacity-80 active:opacity-100 text-slate-100 dark:text-zinc-800 transition-all"
 							>Confirm</button
 						>
 					</div>
