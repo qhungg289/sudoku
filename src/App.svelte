@@ -2,6 +2,10 @@
 	import { onMount } from "svelte";
 	import { scale, fade } from "svelte/transition";
 	import Portal from "svelte-portal";
+	import Logo from "./lib/Logo.svelte";
+	import ActionButton from "./lib/ActionButton.svelte";
+	import Modal from "./lib/Modal.svelte";
+	import NumberButton from "./lib/NumberButton.svelte";
 
 	const BLANK_BOARD = [
 		[0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -301,28 +305,18 @@
 </script>
 
 <main
-	class="mx-auto max-w-2xl h-full flex flex-col items-center justify-around p-4"
+	class="mx-auto max-w-2xl lg:max-w-3xl h-full flex flex-col items-center justify-around p-4"
 >
 	<div class="flex items-center justify-between gap-4 w-full">
-		<div>
-			<h1 class="text-3xl md:text-4xl font-normal">Sudoku</h1>
-			<small
-				>By <a
-					href="https://github.com/qhungg289"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="betterhover:hover:underline focus:underline">@qhungg289</a
-				></small
-			>
-		</div>
+		<Logo />
 
 		<div class="flex items-center gap-2">
-			<button
+			<ActionButton
 				on:click={() => {
 					isNewGameModalOpen = !isNewGameModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 focus:outline-none dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
-				><svg
+			>
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
@@ -336,51 +330,29 @@
 						d="M12 4.5v15m7.5-7.5h-15"
 					/>
 				</svg>
-			</button>
+			</ActionButton>
 			<Portal target="#app">
 				{#if isNewGameModalOpen}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
-						transition:fade
-						on:click={() => (isNewGameModalOpen = false)}
-						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
+					<Modal
+						cancelable
+						on:clickoutside={() => (isNewGameModalOpen = false)}
+						on:cancel={() => (isNewGameModalOpen = false)}
+						on:confirm={() => {
+							newGame({ holes: 50 });
+							isNewGameModalOpen = false;
+						}}
 					>
-						<div
-							on:click|stopPropagation
-							class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
-						>
-							<div class="p-8">
-								<h2 class="text-base md:text-lg text-center">
-									Create a new game board?
-								</h2>
-							</div>
-
-							<div class="flex items-center">
-								<button
-									on:click={() => (isNewGameModalOpen = false)}
-									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:opacity-80 active:opacity-100 transition-all"
-									>Cancel</button
-								>
-								<button
-									on:click={() => {
-										newGame({ holes: 50 });
-										isNewGameModalOpen = false;
-									}}
-									class="w-full px-6 py-2 font-bold rounded-br-lg bg-gradient-to-r from-teal-400 to-sky-400 hover:opacity-80 active:opacity-100 text-slate-100 dark:text-zinc-800 transition-all"
-									>Confirm</button
-								>
-							</div>
-						</div>
-					</div>
+						<span slot="content">Create a new game board?</span>
+					</Modal>
 				{/if}
 			</Portal>
 
-			<button
+			<ActionButton
 				on:click={() => {
 					isResetModalOpen = !isResetModalOpen;
 				}}
-				class="px-2 py-2 border-2 border-slate-200 focus:outline-none dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 focus-visible:border-teal-400 rounded-full transition-colors"
-				><svg
+			>
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
@@ -394,49 +366,28 @@
 						d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
 					/>
 				</svg>
-			</button>
+			</ActionButton>
 			<Portal target="#app">
 				{#if isResetModalOpen}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
-						transition:fade
-						on:click={() => (isResetModalOpen = false)}
-						class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
+					<Modal
+						cancelable
+						on:clickoutside={() => (isResetModalOpen = false)}
+						on:cancel={() => (isResetModalOpen = false)}
+						on:confirm={() => {
+							resetGame();
+							isResetModalOpen = false;
+						}}
 					>
-						<div
-							on:click|stopPropagation
-							class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
-						>
-							<div class="p-8">
-								<h2 class="text-base md:text-lg text-center">
-									This will reset the board to it original state. Are you sure?
-								</h2>
-							</div>
-
-							<div class="flex items-center">
-								<button
-									on:click={() => (isResetModalOpen = false)}
-									class="w-full px-6 py-2 font-bold rounded-bl-lg bg-slate-200 dark:bg-zinc-700 hover:opacity-80 active:opacity-100 transition-all"
-									>Cancel</button
-								>
-								<button
-									on:click={() => {
-										resetGame();
-										isResetModalOpen = false;
-									}}
-									class="w-full px-6 py-2 font-bold rounded-br-lg bg-gradient-to-r from-teal-400 to-sky-400 hover:opacity-80 active:opacity-100 text-slate-100 dark:text-zinc-800 transition-all"
-									>Confirm</button
-								>
-							</div>
-						</div>
-					</div>
+						<span slot="content">
+							This will reset the board to it original state. Are you sure?
+						</span>
+					</Modal>
 				{/if}
 			</Portal>
 
-			<button
+			<ActionButton
 				on:click={revertToLastHistory}
 				disabled={undoHistory.length == 0}
-				class="px-2 py-2 border-2 border-slate-200 focus:outline-none dark:border-zinc-700 betterhover:hover:border-teal-400 enabled:active:bg-teal-400 enabled:active:border-teal-400 enabled:active:text-slate-100 dark:enabled:active:text-zinc-800 disabled:hover:border-slate-200 dark:disabled:hover:border-zinc-700 disabled:text-slate-300 dark:disabled:text-zinc-600 disabled:cursor-not-allowed focus-visible:border-teal-400 rounded-full transition-colors"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -452,7 +403,7 @@
 						d="M15 15l-6 6m0 0l-6-6m6 6V9a6 6 0 0112 0v3"
 					/>
 				</svg>
-			</button>
+			</ActionButton>
 		</div>
 	</div>
 
@@ -467,7 +418,7 @@
 					{#each row as cell, j}
 						{#if !removedVals.some((v) => v.rowIndex == i && v.colIndex == j)}
 							<button
-								class="w-9 h-9 text-lg focus:outline-teal-400 border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class="w-9 lg:w-10 h-9 lg:h-10 text-lg focus:outline-teal-400 border-2 border-transparent font-black bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								disabled
 								class:rounded-tl-lg={i == 0 && j == 0}
 								class:rounded-tr-lg={i == 0 && j == 8}
@@ -478,7 +429,7 @@
 							>
 						{:else}
 							<button
-								class="w-9 h-9 text-lg focus:outline-teal-400 border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
+								class="w-9 lg:w-10 h-9 lg:h-10 text-lg focus:outline-teal-400 border-2 border-transparent betterhover:hover:bg-teal-400 betterhover:hover:text-slate-100 dark:betterhover:hover:text-zinc-800 bg-slate-200 dark:bg-zinc-700 flex items-center justify-center transition-all"
 								class:text-rose-500={removedVals.find(
 									(v) => v.rowIndex == i && v.colIndex == j,
 								).isValid == false}
@@ -505,16 +456,16 @@
 			{/each}
 
 			<div
-				class="h-full w-1 bg-slate-300 dark:bg-zinc-500 absolute left-[7.25rem]"
+				class="h-full w-1 bg-slate-300 dark:bg-zinc-500 absolute left-[7.25rem] lg:left-[8rem]"
 			/>
 			<div
-				class="h-full w-1 bg-slate-300 dark:bg-zinc-500 absolute right-[7.25rem]"
+				class="h-full w-1 bg-slate-300 dark:bg-zinc-500 absolute right-[7.25rem] lg:right-[8rem]"
 			/>
 			<div
-				class="h-1 w-full bg-slate-300 dark:bg-zinc-500 absolute top-[7.25rem]"
+				class="h-1 w-full bg-slate-300 dark:bg-zinc-500 absolute top-[7.25rem] lg:top-[8rem]"
 			/>
 			<div
-				class="h-1 w-full bg-slate-300 dark:bg-zinc-500 absolute bottom-[7.25rem]"
+				class="h-1 w-full bg-slate-300 dark:bg-zinc-500 absolute bottom-[7.25rem] lg:bottom-[8rem]"
 			/>
 		</div>
 
@@ -522,28 +473,21 @@
 			class="grid grid-cols-5 md:grid-cols-3 gap-2 md:gap-4 w-fit mx-auto md:mx-0"
 		>
 			{#each { length: 9 } as _, i}
-				<button
-					class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 focus:outline-none focus-visible:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors"
-					class:bg-teal-400={selectedNumber == i + 1}
-					class:border-teal-400={selectedNumber == i + 1}
-					class:border-slate-200={selectedNumber != i + 1}
-					class:dark:border-zinc-700={selectedNumber != i + 1}
-					class:text-slate-100={selectedNumber == i + 1}
-					class:dark:text-zinc-800={selectedNumber == i + 1}
-					on:click={() => setSelectedNumber(i + 1)}>{i + 1}</button
+				<NumberButton
+					{selectedNumber}
+					displayNumber={i + 1}
+					on:click={() => setSelectedNumber(i + 1)}
 				>
+					{i + 1}
+				</NumberButton>
 			{/each}
 
-			<button
-				class="w-14 md:w-16 h-14 md:h-16 rounded-full border-2 betterhover:hover:border-teal-400 active:bg-teal-400 active:text-slate-100 dark:active:text-zinc-800 focus:outline-none focus-visible:border-teal-400 flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors md:col-start-2"
-				class:bg-teal-400={selectedNumber == 0}
-				class:border-teal-400={selectedNumber == 0}
-				class:border-slate-200={selectedNumber != 0}
-				class:dark:border-zinc-700={selectedNumber != 0}
-				class:text-slate-100={selectedNumber == 0}
-				class:dark:text-zinc-800={selectedNumber == 0}
+			<NumberButton
+				{selectedNumber}
+				displayNumber={0}
 				on:click={() => setSelectedNumber(0)}
-				><svg
+			>
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
@@ -557,37 +501,18 @@
 						d="M12 9.75L14.25 12m0 0l2.25 2.25M14.25 12l2.25-2.25M14.25 12L12 14.25m-2.58 4.92l-6.375-6.375a1.125 1.125 0 010-1.59L9.42 4.83c.211-.211.498-.33.796-.33H19.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-9.284c-.298 0-.585-.119-.796-.33z"
 					/>
 				</svg>
-			</button>
+			</NumberButton>
 		</div>
 	</div>
 
 	<Portal target="#app">
 		{#if isWon}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div
-				transition:fade
-				on:click={() => (isWon = false)}
-				class="h-full w-full absolute inset-0 flex items-center justify-center bg-slate-700/50 dark:bg-zinc-900/50 backdrop-blur"
+			<Modal
+				on:clickoutside={() => (isWon = false)}
+				on:confirm={() => (isWon = false)}
 			>
-				<div
-					on:click|stopPropagation
-					class="bg-slate-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-4/5 max-w-lg"
-				>
-					<div class="p-8">
-						<h2 class="text-base md:text-lg text-center">Completed 🎉</h2>
-					</div>
-
-					<div class="flex items-center">
-						<button
-							on:click={() => {
-								isWon = false;
-							}}
-							class="w-full px-6 py-2 font-bold rounded-br-lg bg-gradient-to-r from-teal-400 to-sky-400 hover:opacity-80 active:opacity-100 text-slate-100 dark:text-zinc-800 transition-all"
-							>Confirm</button
-						>
-					</div>
-				</div>
-			</div>
+				<span slot="content">Completed 🎉</span>
+			</Modal>
 		{/if}
 	</Portal>
 </main>
