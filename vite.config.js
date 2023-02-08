@@ -8,7 +8,12 @@ export default defineConfig({
 		svelte(),
 		VitePWA({
 			registerType: "autoUpdate",
-			includeAssets: ["fonts/*.ttf"],
+			includeAssets: [
+				"fonts/*.ttf",
+				"site.webmanifest",
+				"favicon.svg",
+				"favicon-196.png",
+			],
 			manifest: false,
 		}),
 	],
