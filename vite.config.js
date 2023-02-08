@@ -13,8 +13,12 @@ export default defineConfig({
 				"site.webmanifest",
 				"favicon.svg",
 				"favicon-196.png",
+				"manifest-icon-192.maskable.png",
 			],
 			manifest: false,
+			devOptions: {
+				enabled: true,
+			},
 		}),
 	],
 });

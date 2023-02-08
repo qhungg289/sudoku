@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	@font-face {
+		font-family: "Nunito";
+		font-weight: 400;
+		src: url("../public/fonts/Nunito-Regular.ttf");
+	}
+
+	@font-face {
+		font-family: "Nunito";
+		font-weight: 700;
+		src: url("../public/fonts/Nunito-Bold.ttf");
+	}
+
+	@font-face {
+		font-family: "Nunito";
+		font-weight: 900;
+		src: url("../public/fonts/Nunito-Black.ttf");
+	}
+}
+
 body {
 	-webkit-tap-highlight-color: transparent;
 }
