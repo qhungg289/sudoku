@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { scale, fade } from "svelte/transition";
+	import { scale } from "svelte/transition";
 	import Portal from "svelte-portal";
 	import Logo from "./lib/Logo.svelte";
 	import ActionButton from "./lib/ActionButton.svelte";
