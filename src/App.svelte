@@ -414,7 +414,7 @@
 				</svg>
 			</ActionButton>
 
-			<div class="border-l-2 border-slate-200 dark:border-zinc-700 pl-2">
+			<div class="hidden border-l-2 border-slate-200 dark:border-zinc-700 pl-2">
 				<ActionButton
 					on:click={() => (isSettingsWindowOpen = !isSettingsWindowOpen)}
 				>
