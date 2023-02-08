@@ -9,7 +9,12 @@ export default defineConfig({
 		VitePWA({
 			registerType: "autoUpdate",
 			devOptions: { enabled: true },
-			includeAssets: ["fonts/*.ttf"],
+			includeAssets: [
+				"fonts/*.ttf",
+				"site.webmanifest",
+				"favicon.svg",
+				"favicon-196.png",
+			],
 		}),
 	],
 });
