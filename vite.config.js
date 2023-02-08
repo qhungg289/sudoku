@@ -8,8 +8,8 @@ export default defineConfig({
 		svelte(),
 		VitePWA({
 			registerType: "autoUpdate",
-			devOptions: { enabled: true },
 			includeAssets: ["fonts/*.ttf"],
+			manifest: false,
 		}),
 	],
 });
