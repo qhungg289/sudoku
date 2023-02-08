@@ -4,12 +4,12 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				"ibm-plex-mono": ["IBM Plex Mono", "monospace"],
+				nunito: ["Nunito", "sans-serif"],
 			},
 			screens: {
 				betterhover: { raw: "(hover: hover)" },
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/forms")],
 };
