@@ -12,8 +12,9 @@ export default defineConfig({
 			includeAssets: [
 				"fonts/*.ttf",
 				"site.webmanifest",
-				"favicon.svg",
-				"favicon-196.png",
+				"*.svg",
+				"*.png",
+				"*.jpg",
 			],
 		}),
 	],
