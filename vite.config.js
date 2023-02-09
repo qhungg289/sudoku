@@ -9,9 +9,9 @@ export default defineConfig({
 		VitePWA({
 			registerType: "autoUpdate",
 			includeAssets: [
-				"fonts/Nunito-Black.ttf",
-				"fonts/Nunito-Bold.ttf",
-				"fonts/Nunito-Regular.ttf",
+				"fonts/Nunito-Black.woff",
+				"fonts/Nunito-Bold.woff",
+				"fonts/Nunito-Regular.woff",
 				"site.webmanifest",
 				"favicon.svg",
 				"favicon-196.png",
